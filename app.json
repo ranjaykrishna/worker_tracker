@@ -1,0 +1,8 @@
+{
+  "name": "Track workers on AMT",
+  "description": "A barebones Python app, which can easily be deployed to Heroku.",
+  "image": "heroku/python",
+  "repository": "https://github.com/ranjaykrishna/worker_tracker",
+  "keywords": ["python", "django" ],
+  "addons": [ "heroku-postgresql" ]
+}

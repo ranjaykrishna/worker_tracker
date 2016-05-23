@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+  <table class="table table-condensed table-hover">
+    <tr>
+      <th>Worker Id</th>
+      <th>Condition</th>
+      <th>Known</th>
+      <th># Pos Gold</th>
+      <th># Pos Gold Correct</th>
+      <th># Neg Gold</th>
+      <th># Neg Gold Correct</th>
+      <th>Num Hits</th>
+    </tr>
+    {% for worker in data %}
+    <tr>
+      <td>{{ worker.worker_id }}<td>
+      <td>{{ worker.condition }}<td>
+      <td>{{ worker.known }}<td>
+      <td>{{ worker.num_pos_golds }}<td>
+      <td>{{ worker.num_pos_golds_correct }}<td>
+      <td>{{ worker.num_neg_gold }}<td>
+      <td>{{ worker.num_neg_gold_correct }}<td>
+      <td>{{ worker.num_hits }}<td>
+    </tr>
+    {% endfor %}
+  </tr>
+</div>
+{% endblock %}
