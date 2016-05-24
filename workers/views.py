@@ -5,6 +5,24 @@ from .models import Worker
 
 import json
 
+# Helper Function
+def condition():
+  ctr = Worker.objects.all().count()
+  if ctr % 4  == 0:
+    condition = 0.95
+    known = True
+  elif ctr % 4 == 1:
+    condition = 0.85
+    known = True
+  elif ctr % 4 == 2:
+    condition = 0.95
+    known = False
+  else:
+    condition = 0.85
+    known = False
+  return (condition, known)
+
+# Views
 def index(request):
   window = None
   if 'window' in request.GET:
@@ -20,7 +38,8 @@ def workerData(request):
   if 'window' in request.GET:
     window = request.GET['window']
   if not Worker.objects.filter(pk=worker_id).exists():
-    Worker.objects.create(worker_id=worker_id)
+    (condition, known) = condition()
+    Worker.objects.create(worker_id=worker_id, condition=condition, known=known)
   worker = Worker.objects.get(pk=worker_id)
   return HttpResponse(json.dumps(worker.tojson()))
 
