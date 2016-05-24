@@ -16,14 +16,14 @@
     </tr>
     {% for worker in data %}
     <tr>
-      <td>{{ worker.worker_id }}<td>
-      <td>{{ worker.condition }}<td>
-      <td>{{ worker.known }}<td>
-      <td>{{ worker.num_pos_golds }}<td>
-      <td>{{ worker.num_pos_golds_correct }}<td>
-      <td>{{ worker.num_neg_gold }}<td>
-      <td>{{ worker.num_neg_gold_correct }}<td>
-      <td>{{ worker.num_hits }}<td>
+      <td>{{ worker.worker_id }}</td>
+      <td>{{ worker.condition }}</td>
+      <td>{{ worker.known }}</td>
+      <td>{{ worker.num_pos_golds }}</td>
+      <td>{{ worker.num_pos_golds_correct }}</td>
+      <td>{{ worker.num_neg_golds }}</td>
+      <td>{{ worker.num_neg_golds_correct }}</td>
+      <td>{{ worker.num_hits }}</td>
     </tr>
     {% endfor %}
   </tr>

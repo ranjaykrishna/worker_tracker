@@ -10,7 +10,7 @@ def index(request):
   if 'window' in request.GET:
     window = request.GET['window']
   workers = [w.tojson(window=window) for w in Worker.objects.all()]
-  return render(request, 'index.html', {'data': json.dumps(workers)})
+  return render(request, 'index.html', {'data': workers})
 
 def workerData(request):
   if 'worker_id' not in request.GET:
