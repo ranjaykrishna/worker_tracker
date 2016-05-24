@@ -38,3 +38,10 @@ class Hit(models.Model):
   num_pos_golds_correct = models.PositiveIntegerField(default=0)
   num_neg_golds_correct = models.PositiveIntegerField(default=0)
 
+  def __str__(self):
+    return "assignment_id: %s, pos: %d/%d, neg: %d/%d" % (
+        self.assignment_id,
+        self.num_pos_golds_correct,
+        self.num_pos_golds,
+        self.num_neg_golds_correct,
+        self.num_neg_golds)
