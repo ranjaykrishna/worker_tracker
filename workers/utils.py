@@ -19,7 +19,8 @@ def approve(hit, message):
     print hit.assignment_id, message
     hit.processed = True
     hit.save()
-  except:
+  except Exception, e:
+    print str(e)
     print "Failed to Approve: %s, %s" % (hit.assignment_id, message)
 
 def reject(hit, message):

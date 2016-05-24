@@ -87,3 +87,13 @@ def hitData(request):
     num_neg_golds_correct = hit['num_neg_golds_correct']
   )
   return HttpResponse({})
+
+def workerView(request):
+  if 'worker_id' not in request.GET:
+    return HttpResponse({})
+  worker_id = request.GET['worker_id']
+  hits = []
+  curr_correct = []
+  curr_total = []
+  for hit in Hit.objects.filter(worker__pk=worker_id):
+    hits
