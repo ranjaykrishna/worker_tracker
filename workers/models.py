@@ -10,15 +10,15 @@ class Worker(models.Model):
       hits = Hit.objects.filter(worker__pk=self.pk)
     else:
       hits = Hit.objects.filter(worker__pk=self.pk).order_by('-pk')[:window]
-    num_pos_gold = 0
-    num_pos_gold_correct = 0
-    num_neg_gold = 0
-    num_neg_gold_correct = 0
+    num_pos_golds = 0
+    num_pos_golds_correct = 0
+    num_neg_golds = 0
+    num_neg_golds_correct = 0
     for hit in hits:
-      num_pos_gold += hit.num_pos_gold
-      num_pos_gold_correct += hit.num_pos_gold_correct
-      num_neg_gold += hit.num_neg_gold
-      num_neg_gold_correct += hit.num_neg_gold_correct
+      num_pos_golds += hit.num_pos_golds
+      num_pos_golds_correct += hit.num_pos_golds_correct
+      num_neg_golds += hit.num_neg_golds
+      num_neg_golds_correct += hit.num_neg_golds_correct
     return {'worker_id': self.worker_id,
       'condition': self.condition,
       'known': self.known,
