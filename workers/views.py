@@ -66,6 +66,8 @@ def workerData(request):
     (condition, known) = condition()
     Worker.objects.create(worker_id=worker_id, condition=condition, known=known)
   worker = Worker.objects.get(pk=worker_id)
+  if 'callback' in request.GET:
+    return HttpResponse(request.GET['callback'] + '(' + json.dumps(worker.tojson()) + ')')
   return HttpResponse(json.dumps(worker.tojson()))
 
 def hitData(request):
