@@ -51,14 +51,14 @@ def processHits():
       if total > 0.0:
         score = 100.0*num_correct/total
       if score > hit.worker.condition:
-        message = 'You did not get all the attention checks. But your current score is %d\%. So you are still doing well. It\'s impossible to get all the attention checks. As long as you stay above the threshold of %d\%, you have nothing to worry about.' % (int(score), hit.worker.condition)
+        message = ('You did not get all the attention checks. But your current score is %d%%. So you are still doing well. It\'s impossible to get all the attention checks. As long as you stay above the threshold of %d%%, you have nothing to worry about.' % (int(score), hit.worker.condition))
         approve(hit, message)
         for ohtp in old_hits_to_process:
           approve(ohtp, message)
           ohtp.processed = True
           ohtp.save()
       else:
-        message = 'You did not pass the attention checks. Your current score of %d\% dropped below the acceptance rate of %d\%.' % (int(score), hit.worker.condition)
+        message = 'You did not pass the attention checks. Your current score of %d%% dropped below the acceptance rate of %d%%.' % (int(score), hit.worker.condition)
         reject(hit, message)
         for ohtp in old_hits_to_process:
           approve(ohtp, message)
