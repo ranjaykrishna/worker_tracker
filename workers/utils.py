@@ -73,3 +73,4 @@ def processHits():
         reject(mtc, hit, message)
         for ohtp in old_hits_to_process:
           reject(mtc, ohtp, message)
+  mtc.close()

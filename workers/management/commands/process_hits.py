@@ -8,4 +8,4 @@ class Command(BaseCommand):
   def handle(self, *args, **options):
     while True:
       processHits()
-      time.sleep(1)
+      time.sleep(5)
