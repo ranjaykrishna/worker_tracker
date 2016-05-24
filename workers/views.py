@@ -8,8 +8,8 @@ import json
 
 # Helper Function
 def workerConditions():
-  high_threshold = 0.92
-  low_threshold = 0.83
+  high_threshold = 92
+  low_threshold = 83
   ctr = Worker.objects.all().count()
   if ctr % 4  == 0:
     condition = high_threshold
@@ -87,5 +87,4 @@ def hitData(request):
     num_pos_golds_correct = hit['num_pos_golds_correct'],
     num_neg_golds_correct = hit['num_neg_golds_correct']
   )
-  processHit(data['assignment_id'])
   return HttpResponse({})
