@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from workers.models import Worker, Hit
-from workers.utils import processHit
 
 import json
 
@@ -56,7 +55,6 @@ def index(request):
   return render(request, 'index.html', {'data': workers})
 
 def workerData(request):
-  print request.GET
   if 'worker_id' not in request.GET:
     return HttpResponse()
   worker_id = request.GET['worker_id']

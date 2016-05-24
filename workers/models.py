@@ -31,6 +31,7 @@ class Worker(models.Model):
 class Hit(models.Model):
   hit_id = models.SlugField(max_length=128)
   assignment_id = models.SlugField(max_length=128)
+  processed = models.BooleanField(default=False)
   worker = models.ForeignKey(Worker)
   num_pos_golds = models.PositiveIntegerField(default=0)
   num_neg_golds = models.PositiveIntegerField(default=0)
