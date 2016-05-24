@@ -8,23 +8,24 @@ def get_mturk_connection_from_args():
   if os.path.exists('config.json'):
     args = json.load(open('config.json'))
   else:
-    try:
-      args = {'aws_access_key': os.environ['aws_access_key'], 'aws_secret_key': os.os.environ['aws_secret_key']}
-      print args
-    except:
-      return
+    args = {'aws_access_key': os.environ['aws_access_key'], 'aws_secret_key': os.os.environ['aws_secret_key']}
+    print args
   return MTurkConnection(host='mechanicalturk.sandbox.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_secret_key'])
   #return MTurkConnection(host='mechanicalturk.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_access_key'])
 
 def approve(hit, message):
   mtc = get_mturk_connection_from_args()
   print hit.assignment_id, message
-  #mtc.approve_assignment(hit.assignment_id, message)
+  mtc.approve_assignment(hit.assignment_id, message)
+  hit.processed = True
+  hit.save()
 
 def reject(hit, message):
   mtc = get_mturk_connection_from_args()
   print hit.assignment_id, message
   mtc.reject_assignment(hit.assignment_id, message)
+  hit.processed = True
+  hit.save()
 
 def processHits():
   WINDOW = 10
@@ -55,14 +56,8 @@ def processHits():
         approve(hit, message)
         for ohtp in old_hits_to_process:
           approve(ohtp, message)
-          ohtp.processed = True
-          ohtp.save()
       else:
         message = 'You did not pass the attention checks. Your current score of %d%% dropped below the acceptance rate of %d%%.' % (int(score), hit.worker.condition)
         reject(hit, message)
         for ohtp in old_hits_to_process:
           approve(ohtp, message)
-          ohtp.processed = True
-          ohtp.save()
-    hit.processed = True
-    hit.save()
