@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from workers.models import Worker
+from workers.models import Worker, Hit
 from workers.utils import processHit
 
 import json
