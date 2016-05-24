@@ -24,6 +24,28 @@ def condition():
     known = False
   return (condition, known)
 
+def process(data):
+  hit = {'num_pos_golds': 0, 'num_pos_golds_correct': 0,
+      'num_neg_golds': 0, 'num_neg_golds_correct': 0}
+  gold = json.load(open('gold_dict.json'))
+
+  def key(i):
+    return str(i['image_id']) + '_' + i['text'] + '_' + str(i['bbox']['x']) + '_' + str(i['bbox']['y'])
+
+  for i in data:
+    k = key(i)
+    if k not in gold:
+      continue
+    elif gold[k] == 1:
+      hit['num_pos_golds'] += 1
+      if i['vote']:
+        hit['num_pos_golds_correct'] += 1
+    elif gold[k] == -1:
+      hit['num_neg_golds'] += 1
+      if not i['vote']:
+        hit['num_neg_golds_correct'] += 1
+  return hit
+
 # Views
 def index(request):
   window = None
@@ -45,4 +67,19 @@ def workerData(request):
   worker = Worker.objects.get(pk=worker_id)
   return HttpResponse(json.dumps(worker.tojson()))
 
-
+def hitData(request):
+  if request.method != 'POST':
+    return HttpResponse({})
+  data = json.loads(request.POST['data'])
+  worker_id = data['worker_id']
+  if not Worker.objects.filter(pk=worker_id).exists():
+    return HttpResponse({})
+  hit = process(data['output'])
+  Hit.objects.create(hit_id='',
+    worker=worker,
+    num_pos_golds = hit['num_pos_golds'],
+    num_neg_golds = hit['num_neg_golds'],
+    num_pos_golds_correct = hit['num_pos_golds_correct'],
+    num_neg_golds_correct = hit['num_neg_golds_correct']
+  )
+  return HttpResponse({})

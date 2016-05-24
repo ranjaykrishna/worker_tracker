@@ -12,4 +12,5 @@ from workers.views import *
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^data', workerData, name='worker_data'),
+    url(r'^hit', hitData, name='hit_data'),
 ]
