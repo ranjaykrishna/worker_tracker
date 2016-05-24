@@ -143,7 +143,8 @@ CORS_ORIGIN_WHITELIST = (
   'workersandbox.mturkcontent.com',
   'workersandbox.mturk.com',
   'worker.mturk.com',
-  'worker.mturkcontent.com'
+  'worker.mturkcontent.com',
+  '*',
 )
 #CORS_URLS_REGEX = r'^/hit'
 CORS_ALLOW_METHODS = (
