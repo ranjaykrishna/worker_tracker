@@ -113,6 +113,7 @@ def workerView(request):
       'num_pos_golds_correct': hit.num_pos_golds_correct,
       'num_neg_golds_correct': hit.num_neg_golds_correct,
       'processed': hit.processed,
+      'approved': hit.approved,
       'rating': 100*rating/count
     })
   return render(request, 'worker_view.html', {'hits': hits})

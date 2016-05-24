@@ -18,6 +18,7 @@ def approve(hit, message):
     mtc.approve_assignment(hit.assignment_id, message)
     print hit.assignment_id, message
     hit.processed = True
+    hit.approved = True
     hit.save()
   except Exception, e:
     print "Failed to Approve: %s, %s" % (hit.assignment_id, message)
@@ -28,6 +29,7 @@ def reject(hit, message):
     mtc.reject_assignment(hit.assignment_id, message)
     print hit.assignment_id, message
     hit.processed = True
+    hit.approved = False
     hit.save()
   except:
     print "Failed to Reject: %s, %s" % (hit.assignment_id, message)
