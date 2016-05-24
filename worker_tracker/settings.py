@@ -145,7 +145,7 @@ CORS_ORIGIN_WHITELIST = (
   'worker.mturk.com',
   'worker.mturkcontent.com'
 )
-CORS_URLS_REGEX = r'^/hit*'
+#CORS_URLS_REGEX = r'^/hit'
 CORS_ALLOW_METHODS = (
   'GET',
   'POST',
