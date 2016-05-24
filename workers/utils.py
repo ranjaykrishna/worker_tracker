@@ -10,19 +10,20 @@ def get_mturk_connection_from_args():
   else:
     args = {'aws_access_key': os.environ['aws_access_key'], 'aws_secret_key': os.environ['aws_secret_key']}
   #return MTurkConnection(host='mechanicalturk.sandbox.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_secret_key'])
-  return MTurkConnection(host='mechanicalturk.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_access_key'])
+  return MTurkConnection(host='mechanicalturk.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_secret_key'])
 
-def approve(mtc, hit, message):
+def approve(hit, message):
+  mtc = get_mturk_connection_from_args()
   try:
     mtc.approve_assignment(hit.assignment_id, message)
     print hit.assignment_id, message
     hit.processed = True
     hit.save()
   except Exception, e:
-    print str(e)
     print "Failed to Approve: %s, %s" % (hit.assignment_id, message)
 
-def reject(mtc, hit, message):
+def reject(hit, message):
+  mtc = get_mturk_connection_from_args()
   try:
     mtc.reject_assignment(hit.assignment_id, message)
     print hit.assignment_id, message
@@ -31,11 +32,9 @@ def reject(mtc, hit, message):
   except:
     print "Failed to Reject: %s, %s" % (hit.assignment_id, message)
 
-def processHits():
+def processHits(args):
   WINDOW = 10
   hits = Hit.objects.filter(processed=False)
-  mtc = get_mturk_connection_from_args()
-  print mtc
   for hit in hits:
     old_hits = Hit.objects.filter(worker=hit.worker, pk__lt=hit.pk).order_by('-pk')[:WINDOW]
     old_hits_to_process = []
@@ -43,7 +42,7 @@ def processHits():
       message = 'Good job. Keep going!'
       if hit.worker.known:
         message = 'Good job. You passed all the attention checks.'
-      approve(mtc, hit, message)
+      approve(hit, message)
     elif old_hits.count() < WINDOW:
       continue
     else:
@@ -63,13 +62,13 @@ def processHits():
         message = 'Good job. Keep going!'
         if hit.worker.known:
           message = ('You did not get all the attention checks but your current score is %d%% correct. You are still doing well. It\'s impossible to get all the attention checks. As long as you stay above the threshold of %d%%, you have nothing to worry about.' % (int(score), hit.worker.condition))
-        approve(mtc, hit, message)
+        approve(hit, message)
         for ohtp in old_hits_to_process:
-          approve(mtc, ohtp, message)
+          approve(ohtp, message)
       else:
         message = 'You are not performing well on the attention checks.'
         if hit.worker.known:
           message = 'You did not pass the attention checks. Your current score of %d%% is below the acceptance rate of %d%%.' % (int(score), hit.worker.condition)
-        reject(mtc, hit, message)
+        reject(hit, message)
         for ohtp in old_hits_to_process:
-          reject(mtc, ohtp, message)
+          reject(ohtp, message)
