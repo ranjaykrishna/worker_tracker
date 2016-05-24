@@ -11,15 +11,23 @@
       <th># Neg Gold</th>
       <th># Neg Gold Correct</th>
       <th>Rating</th>
+      <th>Approved</th>
     </tr>
     {% for hit in hits %}
+    {% if hit.processed and hit.approved %}
+    <tr style="background-color:#99ff66">
+    {% elif hit.processed %}
+    <tr style="background-color:#cc0066">
+    {% else %}
     <tr>
+    {% endif %}
       <td>{{ hit.assignment_id }}</td>
       <td>{{ hit.num_pos_golds }}</td>
       <td>{{ hit.num_pos_golds_correct }}</td>
       <td>{{ hit.num_neg_golds }}</td>
       <td>{{ hit.num_neg_golds_correct }}</td>
       <td>{{ hit.rating }}</td>
+      <td>{{ hit.approved }}</td>
     </tr>
     {% endfor %}
   </tr>
