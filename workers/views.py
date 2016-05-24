@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Worker
+from workers.models import Worker
+from workers.utils import processHit
 
 import json
 
 # Helper Function
-def condition():
+def workerConditions():
   high_threshold = 0.92
   low_threshold = 0.83
   ctr = Worker.objects.all().count()
@@ -63,7 +64,7 @@ def workerData(request):
   if 'window' in request.GET:
     window = request.GET['window']
   if not Worker.objects.filter(pk=worker_id).exists():
-    (condition, known) = condition()
+    (condition, known) = workerConditions()
     Worker.objects.create(worker_id=worker_id, condition=condition, known=known)
   worker = Worker.objects.get(pk=worker_id)
   if 'callback' in request.GET:
@@ -79,10 +80,12 @@ def hitData(request):
     return HttpResponse({})
   hit = process(data['output'])
   Hit.objects.create(hit_id='',
+    assignment_id=data['assignment_id'],
     worker=worker,
     num_pos_golds = hit['num_pos_golds'],
     num_neg_golds = hit['num_neg_golds'],
     num_pos_golds_correct = hit['num_pos_golds_correct'],
     num_neg_golds_correct = hit['num_neg_golds_correct']
   )
+  processHit(data['assignment_id'])
   return HttpResponse({})

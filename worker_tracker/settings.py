@@ -138,4 +138,15 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+  'mturk.com',
+  'workersandbox.mturk.com',
+  'worker.mturk.com',
+)
+CORS_URLS_REGEX = r'^/hit*'
+CORS_ALLOW_METHODS = (
+  'GET',
+  'POST',
+  'OPTIONS'
+)
 
