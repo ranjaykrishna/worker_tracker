@@ -39,11 +39,26 @@ class Hit(models.Model):
   num_neg_golds_correct = models.PositiveIntegerField(default=0)
   approved = models.NullBooleanField(default=None)
 
+  def tojson(self):
+    return {
+      'hit_id': self.hit_id,
+      'assignment_id': self.assignment_id,
+      'processed': self.processed,
+      'approved': self.approved,
+      'num_pos_golds': self.num_pos_golds,
+      'num_pos_golds_correct': self.num_pos_golds_correct,
+      'num_neg_golds': self.num_neg_golds,
+      'num_neg_golds_correct': self.num_neg_golds_correct,
+      'worker_id': self.worker.worker_id,
+      'condition': self.worker.condition,
+      'known': self.worker.known,
+    }
+
   def __str__(self):
     return "assignment_id: %s, pos: %d/%d, neg: %d/%d, approved: %s" % (
-        self.assignment_id,
-        self.num_pos_golds_correct,
-        self.num_pos_golds,
-        self.num_neg_golds_correct,
-        self.num_neg_golds,
-        str(self.approved))
+      self.assignment_id,
+      self.num_pos_golds_correct,
+      self.num_pos_golds,
+      self.num_neg_golds_correct,
+      self.num_neg_golds,
+      str(self.approved))
