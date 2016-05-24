@@ -59,8 +59,8 @@ def processHits():
           ohtp.save()
       else:
         message = 'You did not pass the attention checks.'
-        message += ' Your current score of %d\% dropped below the acceptance rate of %d\%.' % (attention_score, condition)
-        reject(hit, attention_score=int(score), condition=hit.worker.condition)
+        message += ' Your current score of %d\% dropped below the acceptance rate of %d\%.' % (score, condition)
+        reject(hit, message)
         for ohtp in old_hits_to_process:
           approve(ohtp, message)
           ohtp.processed = True
