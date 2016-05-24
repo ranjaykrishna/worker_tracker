@@ -55,6 +55,7 @@ def index(request):
   return render(request, 'index.html', {'data': workers})
 
 def workerData(request):
+  print request.GET
   if 'worker_id' not in request.GET:
     return HttpResponse()
   worker_id = request.GET['worker_id']
