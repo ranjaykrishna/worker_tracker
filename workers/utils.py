@@ -32,7 +32,7 @@ def reject(hit, message):
   except:
     print "Failed to Reject: %s, %s" % (hit.assignment_id, message)
 
-def processHits(args):
+def processHits():
   WINDOW = 10
   hits = Hit.objects.filter(processed=False)
   for hit in hits:
