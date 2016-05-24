@@ -78,6 +78,7 @@ def hitData(request):
   worker_id = data['worker_id']
   if not Worker.objects.filter(pk=worker_id).exists():
     return HttpResponse({})
+  worker = Worker.objects.get(pk=worker_id)
   hit = process(data['output'])
   Hit.objects.create(hit_id='',
     assignment_id=data['assignment_id'],
