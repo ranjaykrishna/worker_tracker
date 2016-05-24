@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+  <table class="table table-condensed table-hover">
+    <tr>
+      <th>Assignment Id</th>
+      <th># Pos Gold</th>
+      <th># Pos Gold Correct</th>
+      <th># Neg Gold</th>
+      <th># Neg Gold Correct</th>
+      <th>Rating</th>
+    </tr>
+    {% for hit in hits %}
+    <tr>
+      <td>{{ hit.assignment_id }}</td>
+      <td>{{ hit.num_pos_golds }}</td>
+      <td>{{ hit.num_pos_golds_correct }}</td>
+      <td>{{ hit.num_neg_golds }}</td>
+      <td>{{ hit.num_neg_golds_correct }}</td>
+      <td>{{ hit.rating }}</td>
+    </tr>
+    {% endfor %}
+  </tr>
+</div>
+{% endblock %}

@@ -16,7 +16,7 @@
     </tr>
     {% for worker in data %}
     <tr>
-      <td>{{ worker.worker_id }}</td>
+      <td><a href="/worker?worker_id={{worker.worker_id}}">{{ worker.worker_id }}</a></td>
       <td>{{ worker.condition }}</td>
       <td>{{ worker.known }}</td>
       <td>{{ worker.num_pos_golds }}</td>

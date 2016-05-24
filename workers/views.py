@@ -89,11 +89,31 @@ def hitData(request):
   return HttpResponse({})
 
 def workerView(request):
+  WINDOW = 10
   if 'worker_id' not in request.GET:
     return HttpResponse({})
   worker_id = request.GET['worker_id']
   hits = []
   curr_correct = []
   curr_total = []
-  for hit in Hit.objects.filter(worker__pk=worker_id):
-    hits
+  rating = 0
+  count = 0
+  for hit in Hit.objects.filter(worker__pk=worker_id).order_by('pk'):
+    index = len(curr_total)
+    curr_total.append(hit.num_pos_golds+hit.num_neg_golds)
+    curr_correct.append(hit.num_pos_golds_correct+hit.num_neg_golds_correct)
+    rating += curr_correct[index]
+    count += curr_total[index]
+    if index-WINDOW >= 0:
+      rating -= curr_correct[index-WINDOW]
+      count -= curr_total[index-WINDOW]
+    hits.append({'assignment_id': hit.assignment_id,
+      'num_pos_golds': hit.num_pos_golds,
+      'num_neg_golds': hit.num_neg_golds,
+      'num_pos_golds_correct': hit.num_pos_golds_correct,
+      'num_neg_golds_correct': hit.num_neg_golds_correct,
+      'processed': hit.processed,
+      'rating': 100*rating/count
+    })
+    return render(request, 'worker_view.html', {'hits': hits})
+
