@@ -91,7 +91,7 @@ def hitData(request):
 def workerView(request):
   WINDOW = 10
   if 'worker_id' not in request.GET:
-    return HttpResponse({})
+    return render(request, 'worker_view.html', {'hits': []})
   worker_id = request.GET['worker_id']
   hits = []
   curr_correct = []
@@ -115,5 +115,5 @@ def workerView(request):
       'processed': hit.processed,
       'rating': 100*rating/count
     })
-    return render(request, 'worker_view.html', {'hits': hits})
+  return render(request, 'worker_view.html', {'hits': hits})
 
