@@ -52,6 +52,7 @@ def index(request):
   if 'window' in request.GET:
     window = request.GET['window']
   workers = [w.tojson(window=window) for w in Worker.objects.all()]
+  workers = sorted(workers, key=lambda x: x['num_hits'], reverse=True)
   return render(request, 'index.html', {'data': workers})
 
 def workerData(request):
