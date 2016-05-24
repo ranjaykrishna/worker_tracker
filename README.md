@@ -1,7 +1,7 @@
 Worker Tracker
 =======================
 
-Currently running on workertracker.herokuapp.com
+Currently running on [this site](workertracker.herokuapp.com)
 
 Summary
 =====================
