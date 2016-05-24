@@ -107,6 +107,13 @@ def workerView(request):
     if index-WINDOW >= 0:
       rating -= curr_correct[index-WINDOW]
       count -= curr_total[index-WINDOW]
+    if hit.processed and hit.approved is None:
+      if 100*rating/count > hit.worker.condition:
+        hit.approved = True
+        hit.save()
+      else:
+        hit.approved = False
+        hit.save()
     hits.append({'assignment_id': hit.assignment_id,
       'num_pos_golds': hit.num_pos_golds,
       'num_neg_golds': hit.num_neg_golds,
