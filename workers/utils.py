@@ -9,8 +9,8 @@ def get_mturk_connection_from_args():
     args = json.load(open('config.json'))
   else:
     args = {'aws_access_key': os.environ['aws_access_key'], 'aws_secret_key': os.environ['aws_secret_key']}
-  return MTurkConnection(host='mechanicalturk.sandbox.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_secret_key'])
-  #return MTurkConnection(host='mechanicalturk.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_access_key'])
+  #return MTurkConnection(host='mechanicalturk.sandbox.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_secret_key'])
+  return MTurkConnection(host='mechanicalturk.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_access_key'])
 
 def approve(hit, message):
   mtc = get_mturk_connection_from_args()
