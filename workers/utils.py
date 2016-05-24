@@ -2,10 +2,18 @@ from workers.models import *
 from boto.mturk.connection import MTurkConnection
 
 import json
+import os, sys
 
 def get_mturk_connection_from_args():
-  args = json.load(open('config.json'))
-  return MTurkConnection(host='mechanicalturk.sandbox.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_access_key'])
+  if os.path.exists('config.json'):
+    args = json.load(open('config.json'))
+  else:
+    try:
+      args = {'aws_access_key': os.environ['aws_access_key'], 'aws_secret_key': os.os.environ['aws_secret_key']}
+      print args
+    except:
+      return
+  return MTurkConnection(host='mechanicalturk.sandbox.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_secret_key'])
   #return MTurkConnection(host='mechanicalturk.amazonaws.com', aws_access_key_id=args['aws_access_key'], aws_secret_access_key= args['aws_access_key'])
 
 def approve(hit, message):
