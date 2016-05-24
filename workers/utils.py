@@ -14,6 +14,7 @@ def get_mturk_connection_from_args():
 
 def approve(hit, message):
   mtc = get_mturk_connection_from_args()
+  print mtc
   try:
     mtc.approve_assignment(hit.assignment_id, message)
     print hit.assignment_id, message
