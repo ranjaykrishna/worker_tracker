@@ -6,8 +6,6 @@ import json
 
 class Command(BaseCommand):
   def handle(self, *args, **options):
-    hits = []
     for hit in Hit.objects.all():
-      hits.append(hit.tojson())
-    print json.dumps(hits)
+      print json.dumps(hit.tojson())
 
