@@ -73,7 +73,11 @@ def workerData(request):
 def hitData(request):
   if request.method != 'POST':
     return HttpResponse({})
-  data = json.loads(request.POST['data'])
+  try:
+    data = json.loads(request.POST['data'])
+  except:
+    print request.POST['data']
+    return HttpResponse({})
   if Hit.objects.filter(assignment_id=data['assignment_id']).exists():
     return HttpResponse({})
   worker_id = data['worker_id']
