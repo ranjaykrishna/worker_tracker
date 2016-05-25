@@ -79,6 +79,8 @@ def hitData(request):
     return HttpResponse({})
   worker = Worker.objects.get(pk=worker_id)
   hit = process(data['output'])
+  if Hit.objects.filter(assignment_id=hit['assignment_id']).exists():
+    return HttpResponse({})
   Hit.objects.create(hit_id='',
     assignment_id=data['assignment_id'],
     worker=worker,

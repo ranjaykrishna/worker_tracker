@@ -9,6 +9,5 @@ class Command(BaseCommand):
     hit_dict = {}
     for hit in Hit.objects.all():
       if hit.assignment_id in hit_dict:
-        hit.processed = True
-        hit.save()
+        hit.delete()
       hit_dict[hit.assignment_id] = 1
