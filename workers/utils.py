@@ -37,18 +37,18 @@ def processHits():
   hits = Hit.objects.filter(processed=False)
   mtc = get_mturk_connection_from_args()
   for hit in hits:
-    old_hits = Hit.objects.filter(worker=hit.worker, pk__lt=hit.pk).order_by('-pk')[:WINDOW]
+    old_hits = Hit.objects.filter(worker=hit.worker, pk__lt=hit.pk).order_by('-pk')[:WINDOW-1]
     old_hits_to_process = []
     if hit.num_pos_golds_correct + hit.num_neg_golds_correct == hit.num_pos_golds + hit.num_neg_golds:
       message = 'Good job. Keep going!'
       if hit.worker.known:
         message = 'Good job. You passed all the attention checks.'
       approve(mtc, hit, message)
-    elif old_hits.count() < WINDOW:
+    elif old_hits.count() < WINDOW-1:
       continue
     else:
-      num_correct = 0.0
-      total = 0.0
+      num_correct = hit.num_pos_golds_correct + hit.num_neg_golds_correct
+      total = hit.num_pos_golds + hit.num_neg_golds
       for old_hit in old_hits:
         if not old_hit.processed:
           old_hits_to_process.append(old_hit)
