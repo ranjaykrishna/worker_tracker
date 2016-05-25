@@ -8,19 +8,26 @@ import json
 # Helper Function
 def workerConditions():
   high_threshold = 92
-  low_threshold = 83
+  low_threshold = 70
+  medium_threshold = 83
   ctr = Worker.objects.all().count()
-  if ctr % 4  == 0:
+  if ctr % 6  == 0:
     condition = high_threshold
     known = True
-  elif ctr % 4 == 1:
+  elif ctr % 6 == 1:
     condition = low_threshold
     known = True
-  elif ctr % 4 == 2:
+  elif ctr % 6 == 2:
+    condition = medium_threshold
+    known = True
+  elif ctr % 6 == 3:
     condition = high_threshold
     known = False
-  else:
+  elif ctr % 6 == 4:
     condition = low_threshold
+    known = False
+  else:
+    condition = medium_threshold
     known = False
   return (condition, known)
 
