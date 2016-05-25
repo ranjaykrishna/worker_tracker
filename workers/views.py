@@ -74,13 +74,13 @@ def hitData(request):
   if request.method != 'POST':
     return HttpResponse({})
   data = json.loads(request.POST['data'])
+  if Hit.objects.filter(assignment_id=data['assignment_id']).exists():
+    return HttpResponse({})
   worker_id = data['worker_id']
   if not Worker.objects.filter(pk=worker_id).exists():
     return HttpResponse({})
   worker = Worker.objects.get(pk=worker_id)
   hit = process(data['output'])
-  if Hit.objects.filter(assignment_id=hit['assignment_id']).exists():
-    return HttpResponse({})
   Hit.objects.create(hit_id='',
     assignment_id=data['assignment_id'],
     worker=worker,
