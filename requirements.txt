@@ -1,6 +1,6 @@
 dj-database-url==0.4.1
 Django==1.9.6
-gunicorn==19.4.5
+gunicorn==19.5.0
 django-cors-headers==1.1.0
 numpy==1.10.4
 whitenoise==3.1
